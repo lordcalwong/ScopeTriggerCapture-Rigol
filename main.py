@@ -30,12 +30,14 @@ scope.write(':TRIGger:COUPling DC')
 scope.write(':TRIGger:EDGe:LEVel 1.5')
 scope.single()
 
-while (True):
-    Status = scope.write(':TRIGger:STATus?')
-    time.sleep(5) 
-    print("Triggered? ", str(scope.write(':TRIGger:STATus?')))
-    if Status != 'None' :
-      break
+# while (True):
+#     Status = scope.write(':TRIGger:STATus?')
+#     time.sleep(5) 
+#     print("Triggered? ", str(scope.write(':TRIGger:STATus?')))
+#     # if Status != 'None' :
+#     #   break
+
+scope.write(':TRIGger:STATus?')
 
 
 # Get the horizontal and vertical, scale and offset
