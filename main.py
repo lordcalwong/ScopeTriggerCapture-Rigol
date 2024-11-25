@@ -28,6 +28,8 @@ scope.write(':TRIGger:EDGe:SOURce CHAN1')
 scope.write(':TRIGger:EDGe:SLOPe POS')
 scope.write(':TRIGger:COUPling DC')
 scope.write(':TRIGger:EDGe:LEVel 1.5')
+
+scope.write(":WAV:POIN:MODE RAW")
 scope.single()
 
 # while (True):
@@ -36,22 +38,22 @@ scope.single()
 #     print("Triggered? ", str(scope.write(':TRIGger:STATus?')))
 #     # if Status != 'None' :
 #     #   break
+chk4trig= scope.query(':TRIGger:STATus?')
+print("chk4trig = ", str(chk4trig))
 
-scope.write(':TRIGger:STATus?')
+# # Get the horizontal and vertical, scale and offset                    
+# timescale = float(scope.query(":TIM:SCAL?"))
+# timeoffset = float(scope.query(":TIM:OFFS?"))
+# voltscale = float(scope.query(":CHAN1:SCAL?"))
+# voltoffset = float(scope.query(":CHAN1:OFFS?"))
+# print("timescale= ", str(timescale), ", timeoffset= ", str(timeoffset), ", voltscale= ", str(voltscale), ", voltoffset= ", str(voltoffset))
+
+scope.stop()
 
 
-# Get the horizontal and vertical, scale and offset
-timescale = float(scope.query(":TIM:SCAL?"))
-timeoffset = float(scope.query(":TIM:OFFS?"))
-voltscale = float(scope.query(":CHAN1:SCAL?"))
-voltoffset = float(scope.query(":CHAN1:OFFS?"))
-print("timescale= ", str(timescale), ", timeoffset= ", str(timeoffset), ", voltscale= ", str(voltscale), ", voltoffset= ", str(voltoffset))
-
-# scope.stop()
-#scope.write(":WAV:POIN:MODE RAW")
-#rawdata = scope.query(":WAV:DATA? CHAN1").encode('ascii')[10:]
-#data_size = len(rawdata)
-#print(data_size)
+rawdata = scope.query(":WAV:DATA? CHAN1").encode('ascii')[10:]
+data_size = len(rawdata)
+print(data_size)
 
 
 # plt.plot([1,2,3,4])
