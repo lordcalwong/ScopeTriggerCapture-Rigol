@@ -1,6 +1,6 @@
 
 
-from ds1054z import DS1054Z
+from ds1054z import DS1054Z[savescreen,discovery]
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -29,7 +29,9 @@ scope.write(':TRIGger:EDGe:SLOPe POS')
 scope.write(':TRIGger:COUPling DC')
 scope.write(':TRIGger:EDGe:LEVel 1.5')
 
-scope.write(":WAV:POIN:MODE RAW")
+scope.write(":WAVeform:SOURce CHAN1")
+scope.write(":WAVeform:MODE NORM")
+scope.write(":WAVeform:FORMat RAW")
 scope.single()
 
 # while (True):
@@ -50,10 +52,12 @@ print("chk4trig = ", str(chk4trig))
 
 scope.stop()
 
+#scope.get_waveform_samples()
 
-rawdata = scope.query(":WAV:DATA? CHAN1").encode('ascii')[10:]
-data_size = len(rawdata)
-print(data_size)
+# As a result, a file like this will be saved to your current
+# rawdata = scope.query(":WAV:DATA? CHAN1").encode('ascii')[10:]
+# data_size = len(rawdata)
+# print(data_size)
 
 
 # plt.plot([1,2,3,4])
