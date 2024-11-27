@@ -1,6 +1,6 @@
 
 
-from ds1054z import DS1054Z[savescreen,discovery]
+from ds1054z import DS1054Z
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -18,12 +18,12 @@ scope.write(':CHAN1:COUPling DC')
 scope.set_probe_ratio(1,10)
 scope.set_channel_scale(1,0.5)
 scope.set_channel_offset(1,-1.5)
-scope.write(':CHANnel1:BWLimit OFF')
 scope.write('CHANnel1:INVert OFF')
+scope.write(':CHANnel1:BWLimit OFF')
 
 scope.timebase_scale = 200E-6
 scope.timebase_offset = +200E-6
-
+scope.write(':TRIGger:MODE EDGE')
 scope.write(':TRIGger:EDGe:SOURce CHAN1')
 scope.write(':TRIGger:EDGe:SLOPe POS')
 scope.write(':TRIGger:COUPling DC')
@@ -32,7 +32,11 @@ scope.write(':TRIGger:EDGe:LEVel 1.5')
 scope.write(":WAVeform:SOURce CHAN1")
 scope.write(":WAVeform:MODE NORM")
 scope.write(":WAVeform:FORMat RAW")
+
 scope.single()
+
+Vmax = scope.query(':MEASure:VMAX?')
+print("Vmax = ", str(Vmax))
 
 # while (True):
 #     Status = scope.write(':TRIGger:STATus?')
