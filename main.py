@@ -15,11 +15,12 @@ scope.display_channel(4,0)
 print("Currently displayed channels: ", str(scope.displayed_channels))
 
 scope.write(':CHAN1:COUPling DC')
+scope.write(':CHAN1:INVert OFF')
 scope.set_probe_ratio(1,10)
 scope.set_channel_scale(1,0.5)
+scope.write(':CHAN1:UNITs VOLTage')
 scope.set_channel_offset(1,-1.5)
-scope.write('CHANnel1:INVert OFF')
-scope.write(':CHANnel1:BWLimit OFF')
+scope.write(':CHAN1:BWLimit OFF')
 
 scope.timebase_scale = 200E-6
 scope.timebase_offset = +200E-6
@@ -28,33 +29,34 @@ scope.write(':TRIGger:EDGe:SOURce CHAN1')
 scope.write(':TRIGger:EDGe:SLOPe POS')
 scope.write(':TRIGger:COUPling DC')
 scope.write(':TRIGger:EDGe:LEVel 1.5')
-
-scope.write(":WAVeform:SOURce CHAN1")
-scope.write(":WAVeform:MODE NORM")
-scope.write(":WAVeform:FORMat RAW")
+scope.write(':TRIGger:SWEep SINGle')
 
 scope.single()
 
-Vmax = scope.query(':MEASure:VMAX?')
-print("Vmax = ", str(Vmax))
+# Vmax = scope.query(':MEASure:VMAX?')
+# print("Vmax = ", str(Vmax))
 
-# while (True):
-#     Status = scope.write(':TRIGger:STATus?')
-#     time.sleep(5) 
-#     print("Triggered? ", str(scope.write(':TRIGger:STATus?')))
-#     # if Status != 'None' :
-#     #   break
-chk4trig= scope.query(':TRIGger:STATus?')
-print("chk4trig = ", str(chk4trig))
+# # while (True):
+# #     Status = scope.write(':TRIGger:STATus?')
+# #     time.sleep(5) 
+# #     print("Triggered? ", str(scope.write(':TRIGger:STATus?')))
+# #     # if Status != 'None' :
+# #     #   break
+# chk4trig= scope.query(':TRIGger:STATus?')
+# print("chk4trig = ", str(chk4trig))
 
-# # Get the horizontal and vertical, scale and offset                    
-# timescale = float(scope.query(":TIM:SCAL?"))
-# timeoffset = float(scope.query(":TIM:OFFS?"))
-# voltscale = float(scope.query(":CHAN1:SCAL?"))
-# voltoffset = float(scope.query(":CHAN1:OFFS?"))
-# print("timescale= ", str(timescale), ", timeoffset= ", str(timeoffset), ", voltscale= ", str(voltscale), ", voltoffset= ", str(voltoffset))
+# # # Get the horizontal and vertical, scale and offset                    
+# # timescale = float(scope.query(":TIM:SCAL?"))
+# # timeoffset = float(scope.query(":TIM:OFFS?"))
+# # voltscale = float(scope.query(":CHAN1:SCAL?"))
+# # voltoffset = float(scope.query(":CHAN1:OFFS?"))
+# # print("timescale= ", str(timescale), ", timeoffset= ", str(timeoffset), ", voltscale= ", str(voltscale), ", voltoffset= ", str(voltoffset))
 
-scope.stop()
+# scope.stop()
+
+# scope.write(":WAVeform:SOURce CHAN1")
+# scope.write(":WAVeform:MODE NORM")
+# scope.write(":WAVeform:FORMat RAW")
 
 #scope.get_waveform_samples()
 
