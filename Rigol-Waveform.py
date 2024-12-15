@@ -1,8 +1,14 @@
-# close raw waveform data retrieval but NO DICE! SO CLOSE!
+# IN WORK
+# 
+# Raw waveform data retrieval 
+# 
+# Unfinished
 # 
 
 from ds1054z import DS1054Z
-import numpy
+import pyvisa
+import matplotlib.pyplot as plt
+import numpy as np
 
 # define scope
 scope = DS1054Z('169.254.131.118')
@@ -10,24 +16,23 @@ print("Connected to: ", scope.idn)
 
 # Get the screen image
 scope.stop()
-scope.write(":WAVeform:SOURce CHAN1")
-scope.write(":WAVeform:MODE NORM")
-scope.write(":WAVeform:FORMat RAW")
-bmap_scope = scope.display_data
+scope.write(':WAV:DATA? CHAN1')  # Select channel 1
+raw_data = scope.read_raw()
 
-# Convert data to numpy array
-img = numpy.frombuffer(bmap_scope, dtype=numpy.uint8)
+# Process the data
+header_size = 10 # First 10 bytes are header
+data = np.frombuffer(raw_data[header_size:], dtype=np.int8) 
+voltage_data = (data - 128) * (scope.query(':CHAN1:SCAL?') / 25) # Convert to voltage
 
-plt.imshow(img)  # why doesn't this work !!!
+# Generate time axis
+time_scale = float(scope.query(':TIM:SCAL?'))
+time_data = np.arange(0, len(voltage_data)) * time_scale
+
+# Plot the waveform
+plt.plot(time_data, voltage_data)
+plt.xlabel('Time (s)')
+plt.ylabel('Voltage (V)')
 plt.show()
-
-# Remove header information
-bmap_scope = bmap_scope[11:]
-
-# img.shape = (360, 640)
-# Create an Image object and save as PNG
-image = Image.fromarray(img)
-image.save("screenshot.png")
 
 # Close the connection
 scope.close()
